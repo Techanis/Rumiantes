@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Rumiantes{% endblock %}
+
+{% block content %}
+<h2>Lista de Módulos IoT</h2>
+
+{% for item in data %}
+  <div style="border:1px solid #ccc; margin:10px; padding:10px;">
+    <h3>{{ item.modulo.nombre }} ({{ item.modulo.codigo }})</h3>
+
+    {% if item.ruminant %}
+      <p><strong>Rumiante:</strong> {{ item.ruminant.nombre }}</p>
+      <p>Edad: {{ item.ruminant.edad }}</p>
+      <p>Días Producción: {{ item.ruminant.dias_produccion }}</p>
+      <p>Lactancia: {{ item.ruminant.lactancia }}</p>
+      <p>Estado Producción: {{ item.ruminant.estado_produccion }}</p>
+    {% else %}
+      <p>No hay rumiante asignado.</p>
+    {% endif %}
+
+    <h4>Último dato IoT:</h4>
+    {% if item.iot_data %}
+      <ul>
+        <li>Temperatura: {{ item.iot_data.temperatura }}</li>
+        <li>Actividad: {{ item.iot_data.actividad }}</li>
+        <li>Latitud: {{ item.iot_data.latitud }}</li>
+        <li>Longitud: {{ item.iot_data.longitud }}</li>
+        <li>Batería: {{ item.iot_data.bateria }}</li>
+        <li><small>Fecha: {{ item.iot_data.timestamp|date:"Y-m-d H:i:s" }}</small></li>
+      </ul>
+    {% else %}
+      <p>No hay datos IoT disponibles.</p>
+    {% endif %}
+  </div>
+{% endfor %}
+>
+Aquí va el mapa
+Toggle de cambio entre mapa y gráfico de barras
+{% endblock %}

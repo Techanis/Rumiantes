@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Ruminants - Rumiantes{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="{% static 'css/rumiantes.css' %}"/>
+    
+{% endblock %}
+
+
+{% block content %}
+<script src="{% static 'js/lista_ruminants.js' %}"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<section class="filters">
+    <form method="get" class="filters-form">
+        <div class= "first-row">
+            <div class="search-wrap">
+                <span class="icon">
+                <img src="{% static "img/icons/searchIcon.svg" %}" alt="Ícono de búsqueda" />
+                </span>
+                <input type="search" name="name_query" value="{{ "" }}" placeholder="Buscar por nombre" />
+            </div>
+            
+            <label>
+                <input type="radio" name="selected_View" value="listview" onclick="sendGetRequest(this.name,this.value)"
+                    {% if selected_View == 'listview' %}checked{% endif %}>
+                <div class="imageContainer listviewIcon" tabindex="0">
+                    <img  src="{% static "img/icons/listview.svg" %}" alt="lista1" />
+                </div>
+            </label>
+
+            <label>
+                <input type="radio" name="selected_View" value="squareview" onclick="sendGetRequest(this.name,this.value)"
+                        {% if selected_View == 'squareview' %}checked{% endif %}>
+                <div class="imageContainer squareviewIcon" tabindex="1">
+                    <img src="{% static "img/icons/squareview.svg" %}" alt="lista2" />
+                </div>
+            </label>
+
+            <label>
+                <input type="radio" name="selected_View" value="locationview" onclick="sendGetRequest(this.name, this.value)"
+                    {% if selected_View == 'locationview' %}checked{% endif %}>
+                <div class="imageContainer locationIcon" tabindex="2">
+                    <img src="{% static "img/icons/location.svg" %}" alt="búsqueda por ubicación" />
+                </div>
+            </label>
+            
+            <button class="imageContainer filterIcon">
+                <img src="{% static "img/icons/filterIcon.svg" %}" alt="filtro" />
+            </button>
+        
+        </div>
+
+        <div class="second-row">
+            <div class="chip-group groups" >
+                <label>Grupos</label>
+                <select name="grupo" onchange="this.form.submit()">
+                    <option value="">Todos</option>
+                    {% for g in grupos %}
+                    <option value="{{ g.id }}" {% if f_grupo|default:'' == g.id|stringformat:'s' %}selected{% endif %}>{{ g.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="chip-group estado">
+                <label>Estado</label>
+            {% comment %} 1=>crítico 2=precaución 3=>celo 4=>parto {% endcomment %}
+                <select name="estado_Filter" onchange="this.form.submit()">
+                    <option value="all" {% if estado_Filter == 'all' %}selected{% endif %}>Todos</option>
+                    <option value="critical" {% if estado_Filter == 'critical' %}selected{% endif %}>Críticos</option>
+                    <option value="active" {% if estado_Filter == 'active' %}selected{% endif %}>Activos</option>
+                    <option value="caution" {% if estado_Filter == 'caution' %}selected{% endif %}>Precaución</option>
+                    <option value="heat" {% if estado_Filter == 'heat' %}selected{% endif %}>Celo</option>
+                    <option value="delivery" {% if estado_Filter == 'delivery' %}selected{% endif %}>Parto</option>
+                    <option value="productive" {% if estado_Filter == 'productive' %}selected{% endif %}>En Producción</option>  
+                </select>
+            </div>
+        </div>
+    </form>
+</section>
+
+{% if user.is_authenticated and user.perfil.rol != 'jefe' %}
+<a class="add-ruminant" href="{% url 'ruminants:agregar_ruminant' %}">+ Rumiante</a>
+{% endif %}
+<div> {{estado_Filter}} f</div>
+
+
+ 
+
+<div id="map"> </div>
+<script>
+   var map = L.map('map').setView([-12.100844, -77.044920], 16);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    const dataElement = document.getElementById('ruminants-list');
+    const myData = JSON.parse(dataElement.textContent);
+    console.log(myData);
+
+    // Example markerSS
+    L.marker([-12.100844, -77.044920]).addTo(map)
+      .bindPopup('A pretty popup.')
+      .openPopup()
+</script>
+
+   {{ estado_Filter | json_script:"ruminants-list" }}
+
+
+
+{% endblock %}

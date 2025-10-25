@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Usuarios - Rumiantes{% endblock %}
+
+{% block content %}
+    <h1>Usuarios</h1>
+    <a href="{% url 'usuarios:agregar_usuario' %}">Agregar Nuevo Usuario</a>
+    
+    {% for usuario in usuarios %}
+        <div>
+            <p>
+                Username: {{ usuario.user.username }}<br>
+                Email: {{ usuario.user.email }}<br>
+                Nombre: {{ usuario.user.first_name }}<br>
+                Apellido: {{ usuario.user.last_name }}<br>
+                Teléfono: {{ usuario.telefono }}<br>
+                Empresa: {{usuario.empresa}}<br>
+                Tipo: {{ usuario.get_tipo_usuario_display }}<br>
+                Activo: {{ usuario.activo }}<br>
+                Rol: {{ usuario.rol }}<br>
+                Fecha creación: {{ usuario.fecha_creacion }}
+            </p>
+            
+            <!-- Toggle Active Button -->
+            <form method="post" action="{% url 'usuarios:toggle_activo_usuario' usuario.id %}"
+                  onsubmit="return confirmToggle(this)" 
+                  data-usuario-nombre="{{ usuario.user.username }}" 
+                  data-usuario-activo="{{ usuario.activo }}">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if usuario.activo %}
+                        Desactivar
+                    {% else %}
+                        Activar
+                    {% endif %}
+                </button>
+            </form>
+            
+            <!-- Edit Button -->
+            <a href="{% url 'usuarios:editar_usuario' usuario.id %}" style="margin-left: 10px;">
+                <button type="button">Editar Usuario</button>
+            </a>
+            
+            <!-- Delete Button -->
+            {% if user.perfil.puede_eliminar_usuarios %}
+            <form method="post" action="{% url 'usuarios:eliminar_usuario' usuario.id %}" 
+                  onsubmit="return confirmDelete(this)"
+                  data-usuario-nombre="{{ usuario.user.username }}">
+                {% csrf_token %}
+                <button type="submit" style="color: red;">Eliminar Usuario</button>
+            </form>
+            {% endif %}
+            
+        </div>
+    {% empty %}
+        <p>No hay usuarios registrados.</p>
+    {% endfor %}
+
+    <script>
+        function confirmToggle(form) {
+            var usuarioNombre = form.getAttribute('data-usuario-nombre');
+            var estaActivo = form.getAttribute('data-usuario-activo') === 'True';
+            var action = estaActivo ? 'desactivar' : 'activar';
+            return confirm('¿Estás seguro que quieres ' + action + ' al usuario "' + usuarioNombre + '"?');
+        }
+        
+        function confirmDelete(form) {
+            var usuarioNombre = form.getAttribute('data-usuario-nombre');
+            return confirm('¿Estás seguro que quieres ELIMINAR permanentemente al usuario "' + usuarioNombre + '"?\n\nEsta acción no se puede deshacer.');
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Ruminant - Rumiantes{% endblock %}
+
+{% block content %}
+<h1>Editar rumiante: {{ ruminant.nombre }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <!-- Render all non-date fields normally -->
+    {% for field in form %}
+        {% if field.name not in 'fecha_ultimo_parto fecha_servicio fecha_esperada_parto' %}
+        <div style="margin-bottom: 10px;">
+            <label for="{{ field.id_for_label }}" style="display: block; font-weight: bold;">
+                {{ field.label }}:
+            </label>
+            {{ field }}
+            {% if field.help_text %}
+                <small style="color: #666;">{{ field.help_text }}</small>
+            {% endif %}
+            {% if field.errors %}
+                <div style="color: red;">
+                    {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endfor %}
+    
+    <!-- Manual date fields -->
+    <div style="margin-bottom: 15px;">
+        <label for="fecha_ultimo_parto" style="display: block; font-weight: bold;">
+            Fecha de Último Parto:
+        </label>
+        <input type="date" name="fecha_ultimo_parto" id="fecha_ultimo_parto" 
+               value="{% if ruminant.fecha_ultimo_parto %}{{ ruminant.fecha_ultimo_parto|date:'Y-m-d' }}{% endif %}">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="fecha_servicio" style="display: block; font-weight: bold;">
+            Fecha de Servicio:
+        </label>
+        <input type="date" name="fecha_servicio" id="fecha_servicio" 
+               value="{% if ruminant.fecha_servicio %}{{ ruminant.fecha_servicio|date:'Y-m-d' }}{% endif %}">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="fecha_esperada_parto" style="display: block; font-weight: bold;">
+            Fecha Esperada de Parto:
+        </label>
+        <input type="date" name="fecha_esperada_parto" id="fecha_esperada_parto" 
+               value="{% if ruminant.fecha_esperada_parto %}{{ ruminant.fecha_esperada_parto|date:'Y-m-d' }}{% endif %}">
+    </div>
+    
+    <button type="submit">Actualizar Ruminant</button>
+</form>
+
+<br>
+<a href="{% url 'ruminants:lista_ruminants' %}">Volver a la lista</a>
+{% endblock %}

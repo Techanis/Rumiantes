@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Rumiantes{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Empresas</title>
+    </head>
+    <body>
+        <h1>Empresas</h1>
+        <a href="{% url 'empresas:agregar_empresa' %}">Agregar Nueva Empresa</a>
+        {% for empresa in empresas %}
+        <div>
+            <p>
+            Nombre: {{ empresa.nombre }}<br>
+            RUC: {{ empresa.ruc }}<br>
+            Teléfono: {{ empresa.telefono }}<br>
+            Email: {{ empresa.email }}<br>
+            Dirección: {{ empresa.direccion }}<br>
+            Activo: {{ empresa.activo }}<br>
+            Fecha: {{ empresa.fecha_creacion }}
+            </p>
+            <!-- Active Button -->
+            <form method="post" action="{% url 'empresas:toggle_activo' empresa.id %}"
+                onsubmit="return confirmToggle(this)" 
+                data-empresa-nombre="{{ empresa.nombre }}" 
+                data-empresa-activo="{{ empresa.activo }}">
+                            {% csrf_token %}
+                            <button type="submit">
+                                {% if empresa.activo %}
+                                    Desactivar
+                                {% else %}
+                                    Activar
+                                {% endif %}
+                            </button>
+            </form>
+            <!-- Edit Button -->
+            <a href="{% url 'empresas:editar_empresa' empresa.id %}" style="margin-left: 10px;">
+                <button type="button">Editar Empresa</button>
+            </a>
+            <!-- Delete Button -->
+            <form method="post" action="{% url 'empresas:eliminar_empresa' empresa.id %}" 
+                  onsubmit="return confirmDelete(this)"
+                  data-empresa-nombre="{{ empresa.nombre }}">
+                {% csrf_token %}
+                <button type="submit" style="color: red;">Eliminar Empresa</button>
+            </form>
+            <hr>
+        </div>
+        
+        <hr>
+        {% empty %}
+        <p>No hay empresas.</p>
+        {% endfor %}
+        {% endblock %}
+        <script>
+            function confirmToggle(form) {
+                var empresaNombre = form.getAttribute('data-empresa-nombre');
+                var estaActivo = form.getAttribute('data-empresa-activo') === 'True';
+                var action = estaActivo ? 'desactivar' : 'activar';
+                return confirm('¿Estás seguro que quieres ' + action + ' la empresa "' + empresaNombre + '"?');
+            }
+            function confirmDelete(form) {
+            var empresaNombre = form.getAttribute('data-empresa-nombre');
+            return confirm('¿Está seguro que desea ELIMINAR permanentemente la empresa "' + empresaNombre + '"?\n\nEsta acción no se puede deshacer.');
+        }
+        </script>
+</body>
+</html>

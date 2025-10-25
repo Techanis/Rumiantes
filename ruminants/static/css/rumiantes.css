@@ -1,0 +1,224 @@
+.add-ruminant {
+  position: fixed; /* Positions the element relative to the viewport */
+  bottom: 90px; /* Distance from the bottom edge of the viewport */
+  right: 15px; /* Distance from the right edge of the viewport */
+  margin-right: 15px; /* Add some space between the image and text */
+  background-color: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  padding: 10px;
+  font-weight: 700;
+}
+/* Filtros ----------------------------------------------- */
+.filters {
+  padding: 7px 7px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.filters-form .search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-background-soft);
+  border: 1px solid #e2e2e2;
+  border-radius: 50px;
+  padding: 8px 10px;
+  margin-right: auto;
+  flex-basis: 300px;
+}
+.filters-form input[type="search"] {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  background-color: var(--color-background-soft);
+}
+
+.filters .first-row {
+  display: flex;
+  gap: 2px;
+}
+
+.filters-form input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+}
+
+.filters-form input[type="radio"] + div {
+  cursor: pointer;
+  transition: outline 1s;
+}
+
+.filters-form input[type="radio"]:checked + div {
+  background-color: var(--color-background-selected);
+}
+
+.listviewIcon {
+  border-radius: 50px 0 0 50px;
+  background-color: var(--color-background-soft);
+  padding: 0 8px 0 12px;
+}
+
+.squareviewIcon {
+  padding: 0 10px;
+}
+
+.locationIcon {
+  border-radius: 0 50px 50px 0;
+  padding: 0 12px 0 8px;
+}
+
+.filterIcon {
+  border-radius: 50px;
+  padding: 0 10px;
+}
+
+.imageContainer {
+  border: none;
+}
+
+label > .imageContainer {
+  background-color: var(--color-background-soft);
+  width: 45px;
+  height: 100%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imageContainer > img {
+  height: auto;
+  width: 22px;
+}
+
+/* Segunda fila de filtros ------------ */
+.second-row {
+  margin-top: 5px;
+  display: flex;
+  gap: 5px;
+}
+.groups {
+  flex: 2;
+}
+
+.estado {
+  flex: 1;
+}
+
+.chip-group label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 1px;
+  margin-left: 12px;
+}
+.chip-group select {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 50px;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+/* data Ruminantes ---------------------------------------------------- */
+#map {
+  height: 400px;
+  max-width: 1400px;
+  /* width: 100px; */
+}
+
+.container {
+  min-height: 100%;
+  color: var(--color-text);
+  font-size: 12px;
+  max-width: 1400px;
+}
+.rumiante-card {
+  border: 1px solid #ddd;
+  padding: 1px;
+  margin: 10px 0;
+  background-color: var(--color-background-soft);
+  border-radius: 5px;
+  width: 100%;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li.element {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------------------------------------------- */
+
+.temp {
+  border-radius: 5px;
+  width: 58px;
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+}
+
+.critical {
+  background-color: var(--color-s-critical);
+}
+
+.active {
+  background-color: var(--color-s-active);
+}
+
+.danger {
+  background-color: var(--color-s-danger);
+}
+
+.heat {
+  background-color: var(--color-s-heat);
+}
+
+.delivery {
+  background-color: var(--color-s-delivery);
+}
+
+.tempImages {
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+}
+
+.termImage {
+  margin-top: 5px;
+  align-self: flex-start;
+}
+
+/* ---------------------------------------------- */
+
+.data-extra {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text-gray-boxes);
+}
+
+.data-card {
+  flex: 1;
+}
+
+.id {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.arrow {
+  margin: 20px;
+}

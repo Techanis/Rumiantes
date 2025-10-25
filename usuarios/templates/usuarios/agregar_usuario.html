@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar Usuario</title>
+</head>
+<body>
+    <h1>Agregar Nuevo Usuario</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button type="submit">Guardar Usuario</button>
+    </form>
+    
+    <br>
+    <a href="{% url 'usuarios:lista_usuarios' %}">Volver a la lista</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Usuario</title>
+</head>
+<body>
+    <h1>Editar Usuario: {{ usuario.user.username }}</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button type="submit">Actualizar Usuario</button>
+    </form>
+    
+    <br>
+    <a href="{% url 'usuarios:lista_usuarios' %}">Volver a la lista</a>
+</body>
+</html>

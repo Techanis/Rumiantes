@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar Empresa</title>
+</head>
+<body>
+    <h1>Agregar Nueva Empresa</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button type="submit">Guardar Empresa</button>
+    </form>
+    
+    <br>
+    <a href="{% url 'empresas:lista_empresas' %}">Volver a la lista</a>
+</body>
+</html>
