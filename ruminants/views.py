@@ -7,7 +7,7 @@ from .forms import RuminantForm
 @usuario_required
 def lista_ruminants(request):
     nameFilter = request.GET.get('name_query',"")
-    estadoFilter = request.GET.get('estado_Filter', "all" ) # Default to 'category'
+    estadoFilter = request.GET.get('estado_filter', "all" ) # Default to 'category'
     selectedView = request.GET.get('selected_View',"listview") 
     
     if request.user.perfil.es_superadmin:
@@ -47,9 +47,9 @@ def lista_ruminants(request):
     
     context = {
         'ruminants': ruminants, 
-        'ruminantsData': ruminantsData,
+        'ruminants_data': ruminantsData,
         'ruminants_location':  ruminantsLocation,
-        'estado_Filter' : estadoFilter,
+        'estado_filter' : estadoFilter,
         'selected_View':  selectedView 
     }
     

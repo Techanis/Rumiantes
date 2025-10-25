@@ -53,7 +53,7 @@
   --color-s-heat: #f0cdfb;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--c-gray-1);
@@ -75,7 +75,7 @@
     --color-s-heat: #f0cdfb;
     --color-s-delivery: #bee0f5;
   }
-}
+} */
 
 *,
 *::before,

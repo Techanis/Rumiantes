@@ -138,6 +138,7 @@ label > .imageContainer {
   color: var(--color-text);
   font-size: 12px;
   max-width: 1400px;
+  color: var(--color-text);
 }
 .rumiante-card {
   border: 1px solid #ddd;

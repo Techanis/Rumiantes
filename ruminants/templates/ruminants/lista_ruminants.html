@@ -64,14 +64,14 @@
             <div class="chip-group estado">
                 <label>Estado</label>
             {% comment %} 1=>crítico 2=precaución 3=>celo 4=>parto {% endcomment %}
-                <select name="estado_Filter" onchange="this.form.submit()">
-                    <option value="all" {% if estado_Filter == 'all' %}selected{% endif %}>Todos</option>
-                    <option value="critical" {% if estado_Filter == 'critical' %}selected{% endif %}>Críticos</option>
-                    <option value="active" {% if estado_Filter == 'active' %}selected{% endif %}>Activos</option>
-                    <option value="caution" {% if estado_Filter == 'caution' %}selected{% endif %}>Precaución</option>
-                    <option value="heat" {% if estado_Filter == 'heat' %}selected{% endif %}>Celo</option>
-                    <option value="delivery" {% if estado_Filter == 'delivery' %}selected{% endif %}>Parto</option>
-                    <option value="productive" {% if estado_Filter == 'productive' %}selected{% endif %}>En Producción</option>  
+                <select name="estado_filter" onchange="this.form.submit()">
+                    <option value="all" {% if estado_filter == 'all' %}selected{% endif %}>Todos</option>
+                    <option value="critical" {% if estado_filter == 'critical' %}selected{% endif %}>Críticos</option>
+                    <option value="active" {% if estado_filter == 'active' %}selected{% endif %}>Activos</option>
+                    <option value="caution" {% if estado_filter == 'caution' %}selected{% endif %}>Precaución</option>
+                    <option value="heat" {% if estado_filter == 'heat' %}selected{% endif %}>Celo</option>
+                    <option value="delivery" {% if estado_filter == 'delivery' %}selected{% endif %}>Parto</option>
+                    <option value="productive" {% if estado_filter == 'productive' %}selected{% endif %}>En Producción</option>  
                 </select>
             </div>
         </div>
@@ -83,7 +83,7 @@
 {% endif %}
 
 <section class="container">
-{% for ruminant in ruminantsData %}
+{% for ruminant in ruminants_data %}
     <div class="rumiante-card">
         <ul class="list">
             <li class="element">
